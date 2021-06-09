@@ -6,11 +6,11 @@ import android.view.ViewGroup
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import net.simplifiedcoding.data.models.Passenger
+import com.example.android.codelabs.paging.model.Repo
 import net.simplifiedcoding.databinding.ItemPassengerBinding
 
 class PassengersAdapter :
-    PagingDataAdapter<Passenger, PassengersAdapter.PassengersViewHolder>(PassengersComparator) {
+    PagingDataAdapter<Repo, PassengersAdapter.PassengersViewHolder>(PassengersComparator) {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -32,19 +32,21 @@ class PassengersAdapter :
     inner class PassengersViewHolder(private val binding: ItemPassengerBinding) :
         RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
-        fun bindPassenger(item: Passenger) = with(binding) {
-            imageViewAirlinesLogo.loadImage(item.airline.logo)
-            textViewHeadquarters.text = item.airline.head_quaters
-            textViewNameWithTrips.text = "${item.name}, ${item.trips} Trips"
+        fun bindPassenger(item: Repo) = with(binding) {
+            //imageViewAirlinesLogo.loadImage(item.url.logo)
+            textViewHeadquarters.text = item.fullName
+            tvUrl.text = "${item.url} Git"
+            textViewNameWithTrips.text = item.name
+            tvLanguage.text = item.language
         }
     }
 
-    object PassengersComparator : DiffUtil.ItemCallback<Passenger>() {
-        override fun areItemsTheSame(oldItem: Passenger, newItem: Passenger): Boolean {
-            return oldItem._id == newItem._id
+    object PassengersComparator : DiffUtil.ItemCallback<Repo>() {
+        override fun areItemsTheSame(oldItem: Repo, newItem: Repo): Boolean {
+            return oldItem.fullName == newItem.fullName
         }
 
-        override fun areContentsTheSame(oldItem: Passenger, newItem: Passenger): Boolean {
+        override fun areContentsTheSame(oldItem: Repo, newItem: Repo): Boolean {
             return oldItem == newItem
         }
     }
